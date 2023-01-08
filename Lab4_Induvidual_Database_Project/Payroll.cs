@@ -105,7 +105,7 @@ namespace Lab4_Induvidual_Database_Project
             Console.ReadLine();
             menu.PayRollOffice();
         }
-        public async void AverageSalaryDepartment() //OK
+        public void AverageSalaryDepartment() //OK
         {
             AnsiConsole.MarkupLine("[tan]Getting your information[/]");
             Thread.Sleep(1000);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Lab4_Induvidual_Database_Project.Models
 {
@@ -12,7 +11,6 @@ namespace Lab4_Induvidual_Database_Project.Models
         }
 
         public int PositionId { get; set; }
-        [DisplayName("Position name")]
         public string PositionName { get; set; } = null!;
 
         public virtual ICollection<StaffAdmin> StaffAdmins { get; set; }

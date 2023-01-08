@@ -43,10 +43,10 @@ namespace Labb4_Individual_Database_project
             .PageSize(10)
             .MoreChoicesText("[grey](Move up and down to reveal more choices)[/]")
             .AddChoices(new[] {
-            "Personell list", "Save Staff", "Count employee position", 
-            "Save new student", "Students by class", "Students in school",
-            "Show active/not active courses", "Student information by Id",
-            "Set grade", "Other employee", 
+            "Personell list", "Enter new employee", "Count employees by position", 
+            "Enter new student", "See students in a class", "See all registered students",
+            "Show active/not active courses", "Get important information about the student by ID(SP)",
+            "Enter grade for student(transaction)", "Other employee", 
             "Back to school start", "Go home"
             }));
             switch (adminChoices)
@@ -54,28 +54,28 @@ namespace Labb4_Individual_Database_project
                 case "Personell list":          //OK
                     employee.GetAllStaff();
                     break;
-                case "Save staff":                //OK
+                case "Enter new employee":                //OK
                     employee.SaveStaff();
                     break;
-                case "Count employee position": //OK
+                case "Count employees by position": //OK
                     employee.CountPositions();
                     break;
-                case "Save new student":        //OK
+                case "Enter new student":        //OK
                     pupil.EnrollmentStudent();
                     break;
-                case "Students by class":       //OK
+                case "See students in a class":       //OK
                     pupil.ShowStudentInClass();
                     break;
-                case "Students in school":  //OK
+                case "See all registered students":  //OK
                     pupil.ShowStudentInfo();
                     break;
-                case "Show active/not active courses":
+                case "Show active/not active courses": //OK
                     pupil.ShowCoursesActiveNotActive();
                     break;
-                case "Student information by Id":
+                case "Get important information about the student by ID(SP)": //OK
                     pupil.StoredProcedurId();
                     break;
-                case "Set grade(transaction)":
+                case "Enter grade for student(transaction)": //OK
                     pupil.SetGradeTransaction();
                     break;
                 case "Other employee":
@@ -97,6 +97,7 @@ namespace Labb4_Individual_Database_project
         {
             Console.Clear();
             Pupil pupil = new Pupil();
+            Employee employee = new Employee();
             School school = new School();
             var adminChoices = AnsiConsole.Prompt(
              new SelectionPrompt<string>()
@@ -104,18 +105,24 @@ namespace Labb4_Individual_Database_project
             .PageSize(10)
             .MoreChoicesText("[grey](Move up and down to reveal more choices)[/]")
             .AddChoices(new[] {
-            "See my classmates", "TAke new course", "Back to school start", "Go home"
+            "See my classmates", "Take new course", "Get my information(extra)", "See responsible teacher course", "Back to school start", "Go home"
             }));
             switch (adminChoices)
             {
                 case "See my classmates":
                     Console.WriteLine("See my classmates coming"); //ändra så att min klass visas
                     break;
-                case "Take new course":      
-                    Console.WriteLine("Take new course here! coming!");
+                case "Take new course":
+                    pupil.TakeNewCourse();
+                    break;
+                case "Get my information(extra)": //OK
+                    pupil.ShowStudentExtraInfo();
                     break;
                 case "Back to school start":
                     school.ShowSchoolStart();
+                    break;
+                case "See responsible teacher course":
+                    employee.ResponsibleForCourse();
                     break;
                 case "Go home":
                     Console.WriteLine("Have a nice day!");

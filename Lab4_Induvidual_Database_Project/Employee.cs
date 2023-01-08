@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Lab4_Induvidual_Database_Project;
 using Lab4_Induvidual_Database_Project.Data;
 using Microsoft.Data.SqlClient;
@@ -163,22 +166,56 @@ namespace Labb4_Individual_Database_project
                         Console.WriteLine("Select position 1-11!");
                     }
                 }
-                var name = ""; //stores position name to use in output
+                var positionName = ""; //stores position name to use in output
                 //EF code to get positionName for use in print
-                var countPosition = from cp in context.StaffAdmins
-                                    join p in context.Positions on cp.FkPositionId equals p.PositionId
+                var countPosition = from s in context.StaffAdmins
+                                    join p in context.Positions on s.FkPositionId equals p.PositionId
                                     where p.PositionId == selectedId
-                                    select p;
-                foreach (var p in countPosition) //loop to get position name
-                {
-                    name = p.PositionName;
-                }
-                AnsiConsole.MarkupLine($"[green]Number of[/] [yellow]{name}[/] [green]in the school is:[/] [blue]{countPosition.Count()}[/]");
+                                    select s;
+                //get name for selected position id
+                var getPositionName = from p in context.Positions
+                                      where p.PositionId == selectedId
+                                      select p;
+                foreach (var p in getPositionName) { positionName = p.PositionName; }
+                //Print out result
+                AnsiConsole.MarkupLine($"[green]Number of[/] [yellow]{positionName}[/] [green]in the school is:[/] [blue]{countPosition.Count()}[/]");
                 Console.WriteLine();
                 MoreCountPosition();
             }
         }
+        public void ResponsibleForCourse()
+        {
+            Menu menu = new Menu();
+            SqlConnection sqlcon = new SqlConnection(@"Data Source=ULLSTENLENOVO; Initial Catalog=School;Integrated Security=True");
+            //Query bestämmer vilken data vill vi ha
+            SqlDataAdapter sqlDat = new SqlDataAdapter("SELECT * FROM [Responsible for course]", sqlcon);
+            //Tomt data table
+            DataTable dtTbl = new DataTable();
+            //Fyller data table
+            sqlDat.Fill(dtTbl);
 
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(new string('-', 48));
+            Console.ResetColor();
+            AnsiConsole.MarkupLine("[navyblue]|[/] [grey74]{0, -18}[/] [navyblue]|[/] [grey74]{1, -23}[/] [navyblue]|[/]", "Teacher name", "Responsible for course");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(new string('-', 48));
+            foreach (DataRow dr in dtTbl.Rows)
+            {
+                AnsiConsole.MarkupLine("[navyblue]|[/] [grey74]{0, -18}[/] [navyblue]|[/] [grey74]{1, -23}[/] [navyblue]|[/]", dr["Teacher name"], dr["Responsible for course"]);
+            }
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(new string('-', 48));
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Enter to see menu again");
+            Console.ResetColor();
+            Console.ReadLine();
+            menu.PupilMenu();
+        } //OK
+        //*************************************************
         private void moreToAdd()
         {
             Menu menu = new Menu();
@@ -212,7 +249,6 @@ namespace Labb4_Individual_Database_project
                     Console.WriteLine("| {0, -2} | {1, -18} |", p.PositionId, p.PositionName);
                 }
                 Console.WriteLine(new string('-', 27));
-
             }
         } //OK internal method
         private void MoreCountPosition()

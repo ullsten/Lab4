@@ -58,9 +58,9 @@ namespace Labb4_Individual_Database_project
                 schedule.BorderColor(Color.Green3);
                 schedule.HeaderAlignment(Justify.Center);
                 //manage calender in table
-                var calendar = new Calendar(2022, 12);
-                calendar.AddCalendarEvent(2022, 12, 24);
-                calendar.AddCalendarEvent(2022, 12, 31);
+                var calendar = new Calendar(2023, 01);
+                calendar.AddCalendarEvent(2023, 12, 24);
+                calendar.AddCalendarEvent(2023, 12, 31);
                 calendar.HighlightStyle(Style.Parse("yellow bold"));
                 calendar.HeaderStyle(Style.Parse("blue bold"));
                 // Create a table

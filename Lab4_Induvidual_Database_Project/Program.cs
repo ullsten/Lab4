@@ -1,4 +1,5 @@
 ﻿using System;
+using DocumentFormat.OpenXml.Office.CoverPageProps;
 using Lab4_Induvidual_Database_Project;
 using Lab4_Induvidual_Database_Project.Data;
 using Microsoft.VisualBasic;
@@ -19,36 +20,22 @@ namespace Labb4_Individual_Database_project
             Admin admin = new Admin();
             Menu menu = new Menu();
             //school.ShowSchoolStart();
-            pupil.ShowStudentExtraInfo();
-            //pupil.SetGradeTransaction();
-            //pupil.ShowStudentsNoGrade();
+
+            
+            var startDateCourse = DateTime.Now;
+            Console.WriteLine(startDateCourse.ToString("yyyy/MM/dd"));
 
             //using (var context = new SchoolContext())
             //{
-            //    var date1 = new DateTime(1982, 03, 04, 00, 00, 00);
-            //    var teacherName = "";
-            //    int teacherid = 0;
-            //    var getdatofgrade = from e in context.Exams
-            //                        join s in context.staff on e.FkStaffAdminId equals s.StaffId
-            //                        where e.FkCourseId == 3
-            //                        where e.FkStudentId == 2
-            //                        select new
-            //                        {
-            //                            date = e.DateOfGrade,
-            //                            name = s.FirstName + " " + s.LastName,
-            //                            id = s.StaffId
-            //                        };
-
-            //    foreach (var item in getdatofgrade)
+            //    //Show courses student can choose to take
+            //    var getCourseToChoose = from e in context.Exams
+            //                            join c in context.Courses on e.FkCourseId equals c.CourseId
+            //                            where e.FkStudentId == 1
+            //                            select c;
+            //    foreach (var c in getCourseToChoose)
             //    {
-            //        //Console.WriteLine(item.date);
-            //        date1 = (DateTime)item.date;
-            //        teacherName = item.name;
-            //        teacherid = item.id;
-
+            //        Console.WriteLine($"{c.CourseId} {c.CourseName}");
             //    }
-
-            //    Console.WriteLine($"nu funkar det fint! {date1} {teacherName} {teacherid}");
             //}
         }
     }
