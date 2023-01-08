@@ -30,9 +30,8 @@ namespace Lab4_Induvidual_Database_Project
             SqlConnection sqlcon = new SqlConnection(@"Data Source=ULLSTENLENOVO; Initial Catalog=School;Integrated Security=True");
             //Query bestämmer vilken data vill vi ha
             SqlDataAdapter sqlDat = new SqlDataAdapter("" +
-                "SELECT PositionName AS Position, SUM (Amount) AS [Monthly payment] FROM StaffAdmin\r\n" +
+                "SELECT PositionName AS Position, SUM (Salary) AS [Monthly payment] FROM StaffAdmin\r\n" +
                 "Join Position ON FK_PositionId = PositionId\r\n" +
-                "Join Salary ON FK_SalaryId = SalaryId\r\n" +
                 "Group BY PositionName\r\n" +
                 "order by [Monthly payment] DESC", sqlcon);
             //Tomt data table
@@ -50,7 +49,7 @@ namespace Lab4_Induvidual_Database_Project
             foreach (DataRow dr in dtTbl.Rows)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                AnsiConsole.MarkupLine("[orange1]|[/] [green]{0, -14}[/] [orange1]|[/] [red]{1, -15}[/] [orange1]|[/]", dr["Position"], ((int)dr["Monthly payment"]).ToString("C"));
+                AnsiConsole.MarkupLine("[orange1]|[/] [green]{0, -14}[/] [orange1]|[/] [red]{1, -15}[/] [orange1]|[/]", dr["Position"], ((decimal)dr["Monthly payment"]).ToString("C"));
                 Console.ResetColor();
             }
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -74,9 +73,8 @@ namespace Lab4_Induvidual_Database_Project
             Menu menu = new Menu();
             SqlConnection sqlcon = new SqlConnection(@"Data Source=ULLSTENLENOVO; Initial Catalog=School;Integrated Security=True");
             //Query bestämmer vilken data vill vi ha
-            SqlDataAdapter sqlDat = new SqlDataAdapter("SELECT PositionName AS Position, SUM(Amount*12) AS [Yearly salary] FROM StaffAdmin\r\n" +
+            SqlDataAdapter sqlDat = new SqlDataAdapter("SELECT PositionName AS Position, SUM(Salary*12) AS [Yearly salary] FROM StaffAdmin\r\n" +
                 "Join Position ON FK_PositionId = PositionId\r\n" +
-                "Join Salary ON FK_SalaryId = SalaryId\r\n" +
                 "Group BY PositionName\r\n" +
                 "Order BY [Yearly salary] DESC", sqlcon);
             //Tomt data table
@@ -94,7 +92,7 @@ namespace Lab4_Induvidual_Database_Project
             foreach (DataRow dr in dtTbl.Rows)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                AnsiConsole.MarkupLine("[orange1]|[/] [green]{0, -14}[/] [orange1]|[/] [red]{1, -18}[/] [orange1]|[/]", dr["Position"], ((int)dr["Yearly salary"]).ToString("C"));
+                AnsiConsole.MarkupLine("[orange1]|[/] [green]{0, -14}[/] [orange1]|[/] [red]{1, -18}[/] [orange1]|[/]", dr["Position"], ((decimal)dr["Yearly salary"]).ToString("C"));
                 Console.ResetColor();
             }
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -119,9 +117,8 @@ namespace Lab4_Induvidual_Database_Project
             SqlConnection sqlcon = new SqlConnection(@"Data Source=ULLSTENLENOVO; Initial Catalog=School;Integrated Security=True");
             //Query bestämmer vilken data vill vi ha
             SqlDataAdapter sqlDat = new SqlDataAdapter("" +
-                "SELECT PositionName AS Position, AVG(Amount) AS [Average salary] FROM StaffAdmin\r\n" +
+                "SELECT PositionName AS Position, AVG(Salary) AS [Average salary] FROM StaffAdmin\r\n" +
                 "Join Position ON FK_PositionId = PositionId\r\n" +
-                "Join Salary ON FK_SalaryId = SalaryId\r\n" +
                 "Group BY PositionName\r\n" +
                 "Order BY [Average salary] DESC", sqlcon);
             //Tomt data table
@@ -139,7 +136,7 @@ namespace Lab4_Induvidual_Database_Project
             foreach (DataRow dr in dtTbl.Rows)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                AnsiConsole.MarkupLine("[orange1]|[/] [green]{0, -14}[/] [orange1]|[/] [red]{1, -14}[/] [orange1]|[/]", dr["Position"], ((int)dr["Average salary"]).ToString("C"));
+                AnsiConsole.MarkupLine("[orange1]|[/] [green]{0, -14}[/] [orange1]|[/] [red]{1, -14}[/] [orange1]|[/]", dr["Position"], ((decimal)dr["Average salary"]).ToString("C"));
                 Console.ResetColor();
             }
             Console.ForegroundColor = ConsoleColor.DarkYellow;

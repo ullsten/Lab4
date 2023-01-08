@@ -104,12 +104,12 @@ namespace Labb4_Individual_Database_project
             .PageSize(10)
             .MoreChoicesText("[grey](Move up and down to reveal more choices)[/]")
             .AddChoices(new[] {
-            "Students in my class", "See my courses", "Back to school start", "Go home"
+            "See my classmates", "TAke new course", "Back to school start", "Go home"
             }));
             switch (adminChoices)
             {
-                case "Students in my class":
-                    pupil.ShowStudentInClass(); //OK
+                case "See my classmates":
+                    Console.WriteLine("See my classmates coming"); //ändra så att min klass visas
                     break;
                 case "Take new course":      
                     Console.WriteLine("Take new course here! coming!");
