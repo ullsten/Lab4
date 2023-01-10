@@ -12,16 +12,8 @@ namespace Labb4_Individual_Database_project
     {
         static void Main(string[] args)
         {
-            Payroll payroll = new Payroll();
-            Validate validate = new Validate();
-            Pupil pupil = new Pupil();
             School school = new School();
-            Employee employee = new Employee();
-            Admin admin = new Admin();
-            Menu menu = new Menu();
             school.ShowSchoolStart();
-            //payroll.PaymentMonthly();
-            
         }
     }
 }   
