@@ -151,36 +151,89 @@ namespace Labb4_Individual_Database_project
         {
             using (var context = new SchoolContext())
             {
-                ShowPositions();//Show positions to choose from
-                Console.WriteLine();
-                AnsiConsole.MarkupLine("[lightpink3]Select a position to see how many peaople work there[/] [cornsilk1](1-11)[/]");
-                int selectedId = 0;
-                while (true) //Check to for correct input format (int)
+                Menu menu = new Menu();
+                while (true) //loop until the input is correct
                 {
-                    if (int.TryParse(Console.ReadLine(), out selectedId) && selectedId >= 1 && selectedId <= 11)
+                    Console.Clear();
+                    AnsiConsole.MarkupLine("[blue]Here you can download a printout for the number of employees in positions.[/]");
+                    Console.WriteLine();
+                    AnsiConsole.Markup("[chartreuse1](E)[/][blue]verything at once, or[/] [chartreuse1](s)[/][blue]elect position.[/] ");
+                    var selectedInput = Console.ReadLine();
+                    if (selectedInput.ToLower() == "e")
                     {
+                        var name = (from t in context.Positions //Get position name to use in printing
+                                    select new
+                                    {
+                                        id = t.PositionId,
+                                        nameP = t.PositionName
+                                    }).ToList();
+                        var countP = (from s in context.StaffAdmins //Get positions to use in count
+                                      select new
+                                      {
+                                          id = s.StaffAdminId,
+                                          FkId = s.FkPositionId
+                                      }).ToList();
+                        Console.WriteLine();
+                        Console.WriteLine(new string('-', 47));
+                        AnsiConsole.MarkupLine("| [paleturquoise4]{0, -20}[/] | [paleturquoise4]{1, -20}[/] |", "Position name", "Number on position");
+                        Console.WriteLine(new string('-', 47));
+                        foreach (var item in name)//Printing 
+                        {
+                            AnsiConsole.MarkupLine("| [grey39]{0, -20}[/] | [grey39]{1, -20}[/] |", item.nameP, countP.Count(x => x.FkId == item.id));
+                        }
+                        Console.WriteLine(new string('-', 47));
+                        Console.WriteLine();
+                        AnsiConsole.MarkupLine("[grey58]Enter to get back to menu[/]");
+                        Console.ReadLine();
+                        menu.AdminMenu();
+                        break;
+                    }
+                    else if (selectedInput.ToLower() == "s") //Userinput for position to count
+                    {
+                        int selectedId = 0;
+                        ShowPositions();//Show positions to choose from
+                        Console.WriteLine();
+                        AnsiConsole.MarkupLine("[lightpink3]Select a position to see how many peaople work there[/] [cornsilk1](1-11)[/]");
+
+                        while (true) //Check to for correct input format (int)
+                        {
+                            if (int.TryParse(Console.ReadLine(), out selectedId) && selectedId >= 1 && selectedId <= 11)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Select position 1-11!");
+                            }
+                        }
+
+                        var positionName = ""; //stores position name to use in output
+                                               //EF code to get positionName for use in printing
+                        var countPosition = from s in context.StaffAdmins
+                                            join p in context.Positions on s.FkPositionId equals p.PositionId
+                                            where p.PositionId == selectedId
+                                            select s;
+
+                        //get name for selected position id
+                        var getPositionName = from p in context.Positions
+                                              where p.PositionId == selectedId
+                                              select p;
+                        foreach (var p in getPositionName) { positionName = p.PositionName; }
+                        //Print out result
+                        AnsiConsole.MarkupLine($"[green]Number of[/] [yellow]{positionName}[/] [green]in the school is:[/] [blue]{countPosition.Count()}[/]");
+                        Console.WriteLine();
+                        MoreCountPosition();
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("Select position 1-11!");
+                        Console.WriteLine("Select what to see!");
                     }
                 }
-                var positionName = ""; //stores position name to use in output
-                //EF code to get positionName for use in print
-                var countPosition = from s in context.StaffAdmins
-                                    join p in context.Positions on s.FkPositionId equals p.PositionId
-                                    where p.PositionId == selectedId
-                                    select s;
-                //get name for selected position id
-                var getPositionName = from p in context.Positions
-                                      where p.PositionId == selectedId
-                                      select p;
-                foreach (var p in getPositionName) { positionName = p.PositionName; }
-                //Print out result
-                AnsiConsole.MarkupLine($"[green]Number of[/] [yellow]{positionName}[/] [green]in the school is:[/] [blue]{countPosition.Count()}[/]");
-                Console.WriteLine();
-                MoreCountPosition();
+                
+
+
+               
             }
         }
         public void ResponsibleForCourse()

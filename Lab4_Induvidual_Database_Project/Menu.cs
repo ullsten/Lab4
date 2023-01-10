@@ -78,7 +78,7 @@ namespace Labb4_Individual_Database_project
                 case "Enter grade for student(transaction)": //OK
                     pupil.SetGradeTransaction();
                     break;
-                case "Other employee":
+                case "Other employee": //Not finished
                     EmployeeMenu();
                     break;
                 case "Back to school start":
@@ -110,7 +110,7 @@ namespace Labb4_Individual_Database_project
             switch (adminChoices)
             {
                 case "See my classmates":
-                    Console.WriteLine("See my classmates coming"); //ändra så att min klass visas
+                    pupil.SeeMyClassMates(); //ändra så att min klass visas
                     break;
                 case "Take new course":
                     pupil.TakeNewCourse();

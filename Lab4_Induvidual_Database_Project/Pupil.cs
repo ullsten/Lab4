@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office.CustomUI;
 using DocumentFormat.OpenXml.Office.Word;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Office2010.PowerPoint;
@@ -296,7 +297,7 @@ namespace Labb4_Individual_Database_project
                     }
                 }
                 Console.WriteLine();
-                ShowCoursesStudent(selectedStudentId, out totalCoursesStudent);//Show course by student id where no grade is assigned.
+                ShowCoursesStudentNoGrade(selectedStudentId, out totalCoursesStudent);//Show course by student id where no grade is assigned.
                 Console.WriteLine();
                 AnsiConsole.Markup("[deepskyblue1]Which course should be graded?[/][grey42](enter id)[/] ");
 
@@ -590,31 +591,27 @@ namespace Labb4_Individual_Database_project
                     //string with query
                     string SqlInsertGrade2 = $"UPDATE Exam SET DateOfGrade = GETDATE(), FK_GradeId = {selectedGrade}, FK_StaffAdminId = {setStaffAdminId} " +
                         $"Where FK_StudentId = {selectedStudentId} AND FK_CourseId = {selectedCourseId}";
-
-                    //Open connection do database
-                    connection.Open();
-
+                    connection.Open();//Open connection do database
                     SqlCommand command = connection.CreateCommand();  // Enlist a command in the current transaction
                     SqlTransaction sqlTran = connection.BeginTransaction();   // Start a local transaction.
 
                     command.Transaction = sqlTran;
                     try
                     {
-                        // Execute command with string query
-                        command.CommandText = SqlInsertGrade2;
-
+                        command.CommandText = SqlInsertGrade2;// Execute command with string query
                         returnRows = command.ExecuteNonQuery(); //Get affected rows 
-                        //Commit the transaction.
-                        sqlTran.Commit();
+                        sqlTran.Commit();  //Commit the transaction.
 
                         Console.WriteLine();
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.WriteLine(new string('-', 53));
                         Console.ResetColor();
                         //Print result if transactions went well.
-                        AnsiConsole.MarkupLine($"[mediumorchid1]Student[/] [darkorange3_1]{studentName}[/] [mediumorchid1]with ID:[/] [darkorange3_1]{selectedStudentId},[/] \n" +
-                            $"[mediumorchid1]have completed the course[/] [darkorange3_1]{courseName}[/] [mediumorchid1]and got the grade[/] [darkorange3_1]{selectedGrade},[/] \n" +
-                            $"[mediumorchid1]Signed by:[/] [chartreuse1]{teacherName}[/] [mediumorchid1]with ID[/] [chartreuse1]{teacherId}[/] [grey58]{DateTime.Now.ToString("yyyy/MM/dd")}[/]");
+                        AnsiConsole.MarkupLine($"[mediumorchid1]Date[/] [grey58]{DateTime.Now.ToString("yyyy/MM/dd")}[/]\n" +
+                            $"[mediumorchid1]Student[/] [darkorange3_1]{studentName}[/] [mediumorchid1]ID:[/] [darkorange3_1]{selectedStudentId}[/] \n" +
+                            $"[mediumorchid1]Completed the course[/] [darkorange3_1]{courseName}[/] [mediumorchid1]and got the grade[/] [darkorange3_1]{selectedGrade}[/]");
+                            Console.WriteLine();
+                            AnsiConsole.MarkupLine($"[mediumorchid1]Signed by:[/] [chartreuse1]{teacherName}[/] [mediumorchid1]with ID[/] [chartreuse1]{teacherId}[/]");
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                         AnsiConsole.MarkupLine(new string('-', 53));
                         Console.ResetColor();
@@ -935,12 +932,75 @@ namespace Labb4_Individual_Database_project
         }
         public void SeeMyClassMates()
         {
+            Menu menu = new Menu(); 
+            using(var context = new SchoolContext())
+            {
+                var className = ""; //stores class name for selected student to show classmates from
+                int classInput = 0; //stores classId from selected student
+                int studentId = 0; //stores selected student id from user
+                int totalStudents = context.Students.Count(); //stores totalt students in school
+                //Get selected students classmates
+                var getMyClassMates = from s in context.Students
+                                      join c in context.Classes on s.FkClassId equals c.ClassId
+                                      where s.FkClassId == classInput
+                                      where s.StudentId != studentId
+                                      select new { studentId = s.StudentId, classname = c.ClassName, studentname = s.FirstName + " " + s.LastName };
 
+                var SelectedStudentName = from s in context.Students
+                                          join c in context.Classes on s.FkClassId equals c.ClassId
+                                          select new { totalId = s.StudentId, selectedStudentId = s.StudentId, selectedStudentName = s.FirstName + " " + s.LastName, selectedStudentClass = c.ClassName, classId = c.ClassId };
+
+                ShowStudents(); //Print students to chose from
+                AnsiConsole.Markup("[yellow4_1]Enter you student ID: [/]");
+                while (true) //Check for correct input and between wright value
+                {
+
+                    if (int.TryParse(Console.ReadLine(), out studentId) && studentId >= 1 && studentId <= totalStudents)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine("[red]Select your student id![/]");
+                    }
+                }
+                Console.WriteLine();
+                foreach (var s in SelectedStudentName) //get selected students name for print
+                {
+                    if (studentId == s.selectedStudentId) //Print selected students name and class
+                    {
+                        classInput = s.classId; //stores classId to filter out from print classmates
+                        AnsiConsole.MarkupLine($"[blue]{s.selectedStudentName} your classmates in class [/][yellow]{s.selectedStudentClass}[/] [blue]are:[/]");
+                    }
+                }
+                Console.WriteLine();
+                Console.WriteLine(new string('-', 24));
+                AnsiConsole.MarkupLine("| [yellow4]{0, -20}[/] |", "Student name");
+                Console.WriteLine(new string('-', 24));
+                foreach (var item in getMyClassMates) //Print out classmates for selected student without selected students name
+                {
+                    AnsiConsole.MarkupLine("| [grey46]{0, -20}[/] |", item.studentname);
+                }
+                Console.WriteLine(new string('-', 24));
+                Console.WriteLine();
+                AnsiConsole.Markup("[chartreuse2_1]Is there another student who wants to see their classmates?[/] [blue](Y/N)[/]");
+                var anotherStudent = Console.ReadLine();
+                if (anotherStudent.ToLower() == "y")
+                {
+                    Console.Clear();
+                    SeeMyClassMates();
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("You will be sent back to menu. Hope you will enjoy yourself with your classmates.");
+                    menu.PupilMenu();
+                }
+            }
         }
         public void UpdateStudentInfo()
         {
 
-        }
+        } //NOT started with
 
         //*********************************************************************
         public void ShowClasses() //internal method to show classes in school in method student in class
@@ -1006,7 +1066,7 @@ namespace Labb4_Individual_Database_project
                 Console.ResetColor();
             }
         }
-        public void ShowCoursesStudent(int selectedStudentId, out int totalCoursesStudent) 
+        public void ShowCoursesStudentNoGrade(int selectedStudentId, out int totalCoursesStudent) 
         {
             using (var context = new SchoolContext()) //Print students courses where no grade is set.
             {
@@ -1156,8 +1216,8 @@ namespace Labb4_Individual_Database_project
                 var tempCourse9 = "";
                 var tempCourse10 = "";
                 foreach (var item in takenCourses) //loop to collect courses to array
-                {
-                    courstaken[i++] = item.CourseName; //saves courses with grades that the student has
+                { 
+                    courstaken[i++] = item.CourseName; //saves courses that student taking
                 }
                 //Assigned tempCourse 1-4 courses from array.  
                 tempCourse1 = courstaken[0];

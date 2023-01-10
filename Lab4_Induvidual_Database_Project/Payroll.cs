@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -49,7 +50,8 @@ namespace Lab4_Induvidual_Database_Project
             foreach (DataRow dr in dtTbl.Rows)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                AnsiConsole.MarkupLine("[orange1]|[/] [green]{0, -14}[/] [orange1]|[/] [red]{1, -15}[/] [orange1]|[/]", dr["Position"], ((decimal)dr["Monthly payment"]).ToString("C"));
+                AnsiConsole.MarkupLine("[orange1]|[/] [green]{0, -14}[/] [orange1]|[/] [red]{1, -15}[/] [orange1]|[/]", 
+                    dr["Position"], ((decimal)dr["Monthly payment"]).ToString("C2"));
                 Console.ResetColor();
             }
             Console.ForegroundColor = ConsoleColor.DarkYellow;

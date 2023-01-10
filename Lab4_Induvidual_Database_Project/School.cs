@@ -110,6 +110,9 @@ namespace Labb4_Individual_Database_project
                 case "Go home":
                     Console.ForegroundColor= ConsoleColor.Magenta;
                     Console.WriteLine("Did you go wrong?");
+                    Thread.Sleep(500);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Ok, Have a nice day!");
                     Console.ResetColor();
                     Thread.Sleep(1500);
                     Environment.Exit(0); 

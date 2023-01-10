@@ -19,24 +19,9 @@ namespace Labb4_Individual_Database_project
             Employee employee = new Employee();
             Admin admin = new Admin();
             Menu menu = new Menu();
-            //school.ShowSchoolStart();
-
+            school.ShowSchoolStart();
+            //payroll.PaymentMonthly();
             
-            var startDateCourse = DateTime.Now;
-            Console.WriteLine(startDateCourse.ToString("yyyy/MM/dd"));
-
-            //using (var context = new SchoolContext())
-            //{
-            //    //Show courses student can choose to take
-            //    var getCourseToChoose = from e in context.Exams
-            //                            join c in context.Courses on e.FkCourseId equals c.CourseId
-            //                            where e.FkStudentId == 1
-            //                            select c;
-            //    foreach (var c in getCourseToChoose)
-            //    {
-            //        Console.WriteLine($"{c.CourseId} {c.CourseName}");
-            //    }
-            //}
         }
     }
 }   
