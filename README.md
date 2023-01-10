@@ -31,32 +31,32 @@ Här följer de funktioner du ska bygga i ditt program.
 
 <aside>
 ➡️ Visa information om alla elever (EF i VS)
-
+<br>
 </aside>
 
 <aside>
 ➡️ Visa en lista på alla (aktiva) kurser (EF i VS)
-
+<br>
 </aside>
 
 <aside>
 ➡️ Hur mycket betalar respektive avdelning ut i lön varje månad? (SQL i SSMS)
-
+<br>
 </aside>
 
 <aside>
 ➡️ Hur mycket är medellönen för de olika avdelningarna? (SQL i SSMS)
-
+<br>
 </aside>
 
 <aside>
 ➡️ Skapa en Stored Procedure som tar emot ett Id och returnerar viktig information om den elev som är registrerad med aktuellt id. (SQL i SSMS)
-
+<br>
 </aside>
 
 <aside>
 ➡️ Sätt betyg på en elev genom att använda Transactions ifall något går fel. (SQL i SSMS)
-
+<br>
 </aside>
 
 <aside>
