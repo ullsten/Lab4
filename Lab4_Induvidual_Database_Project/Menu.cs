@@ -14,16 +14,31 @@ namespace Labb4_Individual_Database_project
 {
     public class Menu
     {
-        public void EmployeeMenu()
+        public void EmployeeMenu() //Not finished
         {
+            School school= new School();
             Employee employee = new Employee();
-            employee.ShowPositions();
-            Console.WriteLine("Choose your location for more options.");
-            var location = Console.ReadLine();
-            switch (location)
+            //employee.ShowPositions();
+            Console.WriteLine();
+            AnsiConsole.MarkupLine("This section is not currently in use!");
+            Console.WriteLine();
+            var employeeChoice = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+            .Title("[green]Select your department for more choices.[/]")
+           .PageSize(10)
+           .MoreChoicesText("[grey](Move up and down to reveal more choices)[/]")
+           .AddChoices(new[] {
+            "Back to school start", "Go home"
+           }));
+            switch (employeeChoice)
             {
-                case "":
-
+                case "Back to school start":
+                    school.ShowSchoolStart();
+                    break;
+                case "Go home":
+                    AnsiConsole.MarkupLine("[grey58]See you another time![/]");
+                    Environment.Exit(0);
+                    break;
                 default:
                     break;
             }
@@ -78,7 +93,7 @@ namespace Labb4_Individual_Database_project
                 case "Enter grade for student(transaction)": //OK
                     pupil.SetGradeTransaction();
                     break;
-                case "Other employee": //Not finished
+                case "Other employee": //Not currently in use
                     EmployeeMenu();
                     break;
                 case "Back to school start":

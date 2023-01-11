@@ -151,5 +151,9 @@ namespace Lab4_Induvidual_Database_Project
             Console.ReadLine();
             menu.PayRollOffice();
         }
+        public void SalaryIncrease() //Coming
+        {
+
+        }
     }
 }
