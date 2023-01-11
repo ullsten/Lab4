@@ -1001,6 +1001,10 @@ namespace Labb4_Individual_Database_project
         {
 
         } //NOT started with
+        public void EditStudentInfo()//Coming
+        {
+
+        }
 
         //*********************************************************************
         public void ShowClasses() //internal method to show classes in school in method student in class

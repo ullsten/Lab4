@@ -47,7 +47,6 @@ namespace Labb4_Individual_Database_project
         public void AdminMenu()
         {
             Console.Clear();
-            Admin admin = new Admin();
             Payroll payroll = new Payroll();
             School school = new School();
             Pupil pupil = new Pupil();
