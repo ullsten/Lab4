@@ -243,6 +243,11 @@ namespace Lab4_Induvidual_Database_Project.Data
                     .WithMany(p => p.StaffAdmins)
                     .HasForeignKey(d => d.FkSalaryId)
                     .HasConstraintName("FK_StaffAdmin_Salary");
+
+                entity.HasOne(d => d.FkStaff)
+                    .WithMany(p => p.StaffAdmins)
+                    .HasForeignKey(d => d.FkStaffId)
+                    .HasConstraintName("FK_StaffAdmin_Staff");
             });
 
             modelBuilder.Entity<Student>(entity =>
@@ -295,11 +300,11 @@ namespace Lab4_Induvidual_Database_Project.Data
 
                 entity.ToTable("UserInfo");
 
-                entity.Property(e => e.HashedPassword)
-                    .HasMaxLength(250)
-                    .HasColumnName("hashedPassword");
+                entity.Property(e => e.FkStaffAdminId).HasColumnName("FK_StaffAdminId");
 
-                entity.Property(e => e.Salt).HasMaxLength(250);
+                entity.Property(e => e.HashedPassword)
+                    .HasMaxLength(128)
+                    .HasColumnName("hashedPassword");
 
                 entity.Property(e => e.Username).HasMaxLength(25);
             });

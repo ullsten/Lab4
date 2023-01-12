@@ -13,11 +13,12 @@ namespace Labb4_Individual_Database_project
     {
         static void Main(string[] args)
         {
+            LoginService loginService = new LoginService();
             School school = new School();
             school.ShowSchoolStart();
             HashPassword hash = new HashPassword();
-            //hash.LoginSchool();
-           //hash.AddUserInfo();
+            //loginService.LoginSchool();
+            //hash.AddUserInfo();
         }
     }
 }   

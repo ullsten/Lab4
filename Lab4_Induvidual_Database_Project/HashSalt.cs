@@ -37,7 +37,7 @@ namespace Lab4_Induvidual_Database_Project
             return Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256)) == storedHash;
         }//1
 
-        private static string GetRandomSalt()
+        private static string GetRandomSalt() //BCrypt
         {
             return BCryptNet.GenerateSalt(12);
         }

@@ -47,6 +47,7 @@ namespace Labb4_Individual_Database_project
         public void AdminMenu()
         {
             Console.Clear();
+            Menu menu = new Menu();
             Payroll payroll = new Payroll();
             School school = new School();
             Pupil pupil = new Pupil();
@@ -60,7 +61,7 @@ namespace Labb4_Individual_Database_project
             "Personell list", "Enter new employee", "Count employees by position", 
             "Enter new student", "See students in a class", "See all registered students",
             "Show active/not active courses", "Get important information about the student by ID(SP)",
-            "Enter grade for student(transaction)", "Other employee", 
+            "Enter grade for student(transaction)", "Payroll office", "Other employee", 
             "Back to school start", "Go home"
             }));
             switch (adminChoices)
@@ -91,6 +92,9 @@ namespace Labb4_Individual_Database_project
                     break;
                 case "Enter grade for student(transaction)": //OK
                     pupil.SetGradeTransaction();
+                    break;
+                case "Payroll office":
+                    menu.PayRollOffice();
                     break;
                 case "Other employee": //Not currently in use
                     EmployeeMenu();
@@ -157,7 +161,8 @@ namespace Labb4_Individual_Database_project
             .PageSize(10)
             .MoreChoicesText("[grey](Move up and down to reveal more choices)[/]")
             .AddChoices(new[] {
-            "Payment monthly", "Payment yearly", "Average salary",
+            "Payment monthly", "Payment yearly", "Average salary", "Back to admin menu" +
+            "",
             "Back to school start", "Go home"
             }));
             switch (payRolChoices)
@@ -170,6 +175,9 @@ namespace Labb4_Individual_Database_project
                     break;
                 case "Average salary":
                     payroll.AverageSalaryDepartment();
+                    break;
+                case "Back to admin menu":
+                    AdminMenu();
                     break;
                 case "Back to school start":
                     school.ShowSchoolStart();

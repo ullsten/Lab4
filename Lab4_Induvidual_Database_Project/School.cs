@@ -19,7 +19,7 @@ namespace Labb4_Individual_Database_project
         {
             Console.Clear();
             Menu menu = new Menu();
-            HashPassword hashPassword = new HashPassword();
+            LoginService login = new LoginService();
             var date = "w.01";
             using (var context = new SchoolContext()) 
             {
@@ -97,19 +97,18 @@ namespace Labb4_Individual_Database_project
             .PageSize(10)
             .MoreChoicesText("[grey](Move up and down to reveal more choices)[/]")
             .AddChoices(new[] {
-            "Administration", "Student", "Payroll office", "Go home"}));
+            "Administration", "Student", "Go home"}));
             switch (department)
             {
                 case "Administration":
-                    hashPassword.LoginSchool();
-                    //menu.AdminMenu();
+                    login.LoginSchool();
                     break;
                 case "Student":
                     menu.PupilMenu();
                     break;
-                case "Payroll office":
-                    menu.PayRollOffice();
-                    break;
+                //case "Payroll office":
+                //    menu.PayRollOffice();
+                //    break;
                 case "Go home":
                     Console.ForegroundColor= ConsoleColor.Magenta;
                     Console.WriteLine("Did you go wrong?");

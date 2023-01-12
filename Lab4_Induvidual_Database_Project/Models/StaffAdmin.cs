@@ -20,6 +20,7 @@ namespace Lab4_Induvidual_Database_Project.Models
         public virtual Address? FkAddress { get; set; }
         public virtual Position? FkPosition { get; set; }
         public virtual Salary? FkSalary { get; set; }
+        public virtual staff? FkStaff { get; set; }
         public virtual ICollection<Exam> Exams { get; set; }
     }
 }
