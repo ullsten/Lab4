@@ -1,28 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Office.CustomUI;
-using DocumentFormat.OpenXml.Office.Word;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Office2010.PowerPoint;
-using DocumentFormat.OpenXml.Presentation;
-using DocumentFormat.OpenXml.Wordprocessing;
+﻿using System.Data;
 //using DocumentFormat.OpenXml.Wordprocessing;
-using Lab4_Induvidual_Database_Project;
 using Lab4_Induvidual_Database_Project.Data;
 using Lab4_Induvidual_Database_Project.Models;
 using Microsoft.Data.SqlClient;
 using Spectre.Console;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using Color = Spectre.Console.Color;
 using Style = Spectre.Console.Style;
 
 namespace Labb4_Individual_Database_project
@@ -435,7 +416,7 @@ namespace Labb4_Individual_Database_project
                 //SQL-code
                 SqlCommand cmd = new SqlCommand("StudentInfoById", connection);
                 //Sets commandtyp to call for stored
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
                 //open connection to base
                 connection.Open();
                 cmd.Parameters.AddWithValue("@Id", InputId); //Send parameter to sql query

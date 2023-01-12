@@ -26,11 +26,13 @@ namespace Lab4_Induvidual_Database_Project.Data
         public virtual DbSet<GradesLastMonth> GradesLastMonths { get; set; } = null!;
         public virtual DbSet<PayrollOffice> PayrollOffices { get; set; } = null!;
         public virtual DbSet<Position> Positions { get; set; } = null!;
+        public virtual DbSet<ResponsibleForCourse> ResponsibleForCourses { get; set; } = null!;
         public virtual DbSet<Salary> Salaries { get; set; } = null!;
         public virtual DbSet<ShowTeacherWithCourse> ShowTeacherWithCourses { get; set; } = null!;
         public virtual DbSet<StaffAdmin> StaffAdmins { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<TestTable> TestTables { get; set; } = null!;
+        public virtual DbSet<UserInfo> UserInfos { get; set; } = null!;
         public virtual DbSet<staff> staff { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -174,6 +176,21 @@ namespace Lab4_Induvidual_Database_Project.Data
                 entity.Property(e => e.PositionName).HasMaxLength(20);
             });
 
+            modelBuilder.Entity<ResponsibleForCourse>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("Responsible for course");
+
+                entity.Property(e => e.ResponsibleForCourse1)
+                    .HasMaxLength(50)
+                    .HasColumnName("Responsible for course");
+
+                entity.Property(e => e.TeacherName)
+                    .HasMaxLength(101)
+                    .HasColumnName("Teacher name");
+            });
+
             modelBuilder.Entity<Salary>(entity =>
             {
                 entity.ToTable("Salary");
@@ -210,7 +227,7 @@ namespace Lab4_Induvidual_Database_Project.Data
 
                 entity.Property(e => e.FkStaffId).HasColumnName("FK_StaffId");
 
-                entity.Property(e => e.Salary).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.Salary).HasColumnType("decimal(8, 2)");
 
                 entity.HasOne(d => d.FkAddress)
                     .WithMany(p => p.StaffAdmins)
@@ -270,6 +287,21 @@ namespace Lab4_Induvidual_Database_Project.Data
                 entity.Property(e => e.Testing)
                     .HasMaxLength(10)
                     .IsFixedLength();
+            });
+
+            modelBuilder.Entity<UserInfo>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.ToTable("UserInfo");
+
+                entity.Property(e => e.HashedPassword)
+                    .HasMaxLength(250)
+                    .HasColumnName("hashedPassword");
+
+                entity.Property(e => e.Salt).HasMaxLength(250);
+
+                entity.Property(e => e.Username).HasMaxLength(25);
             });
 
             modelBuilder.Entity<staff>(entity =>

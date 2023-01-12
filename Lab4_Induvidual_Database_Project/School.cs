@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleTables;
 using Gma.System.MouseKeyHook;
+using Lab4_Induvidual_Database_Project;
 using Lab4_Induvidual_Database_Project.Data;
 using Lab4_Induvidual_Database_Project.Models;
 using Spectre.Console;
@@ -18,7 +19,8 @@ namespace Labb4_Individual_Database_project
         {
             Console.Clear();
             Menu menu = new Menu();
-       
+            HashPassword hashPassword = new HashPassword();
+            var date = "w.01";
             using (var context = new SchoolContext()) 
             {
                 var grid = new Grid();
@@ -40,7 +42,7 @@ namespace Labb4_Individual_Database_project
                     "\n" +
                     "\n" +
                     "All ingredientes are carefully selected adn with local roots");
-                courses.Header = new PanelHeader("Food voucher w.51");
+                courses.Header = new PanelHeader("Food voucher " + date);
                 courses.Expand();
                 courses.BorderColor(Color.Green3);
                 courses.HeaderAlignment(Justify.Center);
@@ -99,7 +101,8 @@ namespace Labb4_Individual_Database_project
             switch (department)
             {
                 case "Administration":
-                    menu.AdminMenu();
+                    hashPassword.LoginSchool();
+                    //menu.AdminMenu();
                     break;
                 case "Student":
                     menu.PupilMenu();
