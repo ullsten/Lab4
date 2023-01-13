@@ -106,9 +106,6 @@ namespace Labb4_Individual_Database_project
                 case "Student":
                     menu.PupilMenu();
                     break;
-                //case "Payroll office":
-                //    menu.PayRollOffice();
-                //    break;
                 case "Go home":
                     Console.ForegroundColor= ConsoleColor.Magenta;
                     Console.WriteLine("Did you go wrong?");

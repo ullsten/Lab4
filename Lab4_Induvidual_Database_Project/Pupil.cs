@@ -856,7 +856,6 @@ namespace Labb4_Individual_Database_project
                 //set selected values to table
                 var takeNewCourse = new Exam();
                 {
-
                     takeNewCourse.StartDateCourse = DateTime.Now;
                     takeNewCourse.FkStudentId = selectedStudentId;
                     takeNewCourse.FkCourseId= selectedCourseId;
@@ -978,10 +977,6 @@ namespace Labb4_Individual_Database_project
                 }
             }
         }
-        public void UpdateStudentInfo()
-        {
-
-        } //NOT started with
         public void EditStudentInfo()//Coming
         {
 

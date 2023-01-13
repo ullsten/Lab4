@@ -15,10 +15,10 @@ namespace Labb4_Individual_Database_project
         {
             LoginService loginService = new LoginService();
             School school = new School();
-            school.ShowSchoolStart();
-            HashPassword hash = new HashPassword();
-            //loginService.LoginSchool();
-            //hash.AddUserInfo();
+            //school.ShowSchoolStart();
+            Payroll payroll = new Payroll();
+            //payroll.GetSalaryByPosition();
+            payroll.SalaryIncrease();
         }
     }
 }   

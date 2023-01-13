@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Office.CustomUI;
 using DocumentFormat.OpenXml.Office2010.Drawing;
 using Lab4_Induvidual_Database_Project;
 using Lab4_Induvidual_Database_Project.Data;
@@ -14,6 +15,7 @@ using Labb4_Individual_Database_project;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Spectre.Console;
+using Menu = Labb4_Individual_Database_project.Menu;
 
 namespace Lab4_Induvidual_Database_Project
 {
@@ -153,7 +155,181 @@ namespace Lab4_Induvidual_Database_Project
         }
         public void SalaryIncrease() //Coming
         {
+            //Employee employee = new Employee();
+            Menu menu = new Menu();
+            var staffName = "";
+            decimal currentSalary = 0;
+            var negotiate = "";
+            var feelsOk = "";
+            var salaryProposal2 = "";
+            var youThink = "";
+            decimal newSalary = 0;
+            int staffId = 0;
+            int desiredSalaryIncrease = 0;
+            using (var context = new SchoolContext())
+            { 
+                Random rnd = new Random(); //Create random rnd
+                decimal salaryProposal = rnd.Next(350,2500); //Random values in ()
+                decimal salaryProposalLower = rnd.Next(250, 1000);
 
+                AnsiConsole.Markup("[green]Welcome, you want to negotiate the salary?[/] [blue](Y/N)[/] ");
+                negotiate = Console.ReadLine();
+                while (true)
+                {
+                    if (negotiate.ToLower() == "y")
+                    {
+                        GetSalaryByPosition(out staffName, out currentSalary, out staffId); //Get current salary after position input
+                        Console.WriteLine();
+                        AnsiConsole.MarkupLine($"[gold3]{staffName}[/] [green]today your salary is[/] [yellow]{currentSalary.ToString("C")}[/]");
+                        Console.WriteLine();
+                        AnsiConsole.Markup($"[green]According to the collective agreement, you can get a[/] [yellow]{salaryProposal.ToString("C")}[/] [green]salary increase. Feels ok?[/] [blue](Y/N)[/] ");
+                        feelsOk = Console.ReadLine();
+                        if (feelsOk.ToLower() == "y")
+                        {
+                            var updateSalary = context.StaffAdmins.First(sa => sa.StaffAdminId == staffId); //Update salary for selected staff
+                            if (updateSalary != null)
+                            {
+                                newSalary += salaryProposal + currentSalary;
+                                updateSalary.Salary = newSalary;
+                            }
+                            context.SaveChanges();
+                            Console.WriteLine(new string('-', 55));
+                            AnsiConsole.MarkupLine($"[green]From[/] [grey58]{DateTime.Now.ToString("yyyy/MM/dd")}[/] [green]Your new salary is:[/] [yellow]{newSalary.ToString("C")}[/]");
+                            Console.WriteLine(new string('-', 55));
+                            AnsiConsole.MarkupLine("[grey58]|enter to get to the menu|[/]");
+                            Console.ReadLine();
+                            break;
+                        }
+                        else if (feelsOk.ToLower() == "n")
+                        {
+                            AnsiConsole.Markup("[gold3]How much do you think?[/] ");
+                            var ownProposal = int.TryParse(Console.ReadLine(), out desiredSalaryIncrease);
+                            while (true)
+                            {
+                                if (desiredSalaryIncrease > 2500)
+                                {
+                                    AnsiConsole.Markup($"[rosybrown]Sorry, but that´s not possible! I can give you[/] [yellow]{salaryProposalLower.ToString("C")}[/] [blue](Y/N)[/] ");
+                                    salaryProposal2 = Console.ReadLine();
+                                }
+                                if (salaryProposal2.ToLower() == "y")
+                                {
+                                    var updateSalary = context.StaffAdmins.First(sa => sa.StaffAdminId == staffId); //Update salary for selected staff
+                                    if (updateSalary != null)
+                                    {
+                                        newSalary += desiredSalaryIncrease + currentSalary;
+                                        updateSalary.Salary = newSalary;
+                                    }
+                                    context.SaveChanges();
+                                    Console.WriteLine(new string('-', 55));
+                                    AnsiConsole.MarkupLine($"[green]From[/] [grey58]{DateTime.Now.ToString("yyyy/MM/dd")}[/] [green]Your new salary is:[/] [yellow]{newSalary.ToString("C")}[/]");
+                                    Console.WriteLine(new string('-', 55));
+                                    AnsiConsole.MarkupLine("[grey58]|enter to get back to menu|[/]");
+                                    Console.ReadLine();
+                                    menu.PayRollOffice();
+                                    break;
+                                }
+                                else if (salaryProposal2.ToLower() == "n")
+                                {
+                                    AnsiConsole.MarkupLine("[blue]Ok, then you can come back another time![/]");
+                                    Console.WriteLine();
+                                    AnsiConsole.MarkupLine("[grey58]|enter to get to the menu|[/]");
+                                    Console.ReadLine();
+                                    menu.PayRollOffice();
+                                    break;
+                                }
+                                if (desiredSalaryIncrease <= 2500)
+                                {
+                                    Console.WriteLine();
+                                    AnsiConsole.MarkupLine("[gold3]Ok, I can agree with that![/]");
+                                    var updateSalary = context.StaffAdmins.First(sa => sa.StaffAdminId == staffId); //Update salary for selected staff
+                                    if (updateSalary != null)
+                                    {
+                                        newSalary += desiredSalaryIncrease + currentSalary;
+                                        updateSalary.Salary = newSalary;
+                                    }
+                                    context.SaveChanges();
+                                    Console.WriteLine(new string('-', 55));
+                                    AnsiConsole.MarkupLine($"[green]From[/] [grey58]{DateTime.Now.ToString("yyyy/MM/dd")}[/] [green]Your new salary is:[/] [yellow]{newSalary.ToString("C")}[/]");
+                                    Console.WriteLine(new string('-', 55));
+                                    AnsiConsole.MarkupLine("[grey58]|enter to get to the menu|[/]");
+                                    Console.ReadLine();
+                                    menu.PayRollOffice();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else if (negotiate.ToLower()  == "n")
+                    {
+                        AnsiConsole.MarkupLine("[grey58]Ok, you can alway come back another time![/]");
+                        Thread.Sleep(1000);
+                        menu.PayRollOffice();
+                    }
+                    else
+                    {
+                        AnsiConsole.Markup("[red]What did you say?[/] [blue](Y/N?[/] ");
+                        negotiate = Console.ReadLine();
+                    }
+                }
+            }
+        }
+        public void GetSalaryByPosition(out string staffName, out decimal currentSalary, out int staffId) //Get current salary by staffID
+        {
+            Employee employee = new Employee();
+            staffName = ""; //stores current staff name for selected staff
+            currentSalary = 0; //stores current salary for selected staff ID
+            int selectedStaffId = 0;
+            Console.WriteLine();
+            ShowEmployees(); //Show employees with id to chose from
+            Console.WriteLine();
+            using (var context = new SchoolContext())
+            {
+                var totalStaff = from s in context.staff select s; //to get total staff to while loop
+                AnsiConsole.Markup($"[green]Enter your employment ID:[/] ");
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out selectedStaffId) && selectedStaffId >= 1 && selectedStaffId <= totalStaff.Count())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Select employee ID 1-{totalStaff.Count()}!");
+                    }
+                }
+                staffId = selectedStaffId; //Get selected staff Id to use later
+                // Get current salary from staffId
+                var getSalaryById = from sa in context.StaffAdmins
+                                    join s in context.staff on sa.FkStaffId equals s.StaffId
+                                    join p in context.Positions on sa.FkStaffId equals p.PositionId
+                                    where sa.FkStaffId == selectedStaffId
+                                    select new
+                                    {
+                                        name = s.FirstName + " " + s.LastName,
+                                        position = p.PositionName,
+                                        currentS = sa.Salary
+                                    };
+                foreach (var item in getSalaryById)
+                {
+                    staffName = item.name;
+                    currentSalary = (decimal)item.currentS;
+                }
+            }
+        }
+        public void ShowEmployees() //Internal method to show employees in get current salary by ID
+        {
+            using(var context = new SchoolContext())
+            {
+                var getEmployees = from s in context.staff select s;
+                Console.WriteLine(new string('-', 26));
+                AnsiConsole.MarkupLine("| [green]{0, -2}[/] | [green]{1, -17}[/] |", "Id", "Employee names");
+                Console.WriteLine(new string('-', 26));
+                foreach (var s in getEmployees)
+                {
+                    AnsiConsole.MarkupLine("| [yellow]{0, -2}[/] | [grey46]{1, -17}[/] | ", s.StaffId, s.FirstName + " " + s.LastName);
+                }
+                Console.WriteLine(new string('-', 26));
+            }
         }
     }
 }
