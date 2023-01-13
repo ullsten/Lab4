@@ -16,7 +16,7 @@ namespace Labb4_Individual_Database_project
             LoginService loginService = new LoginService();
             School school = new School();
             school.ShowSchoolStart();
-            Payroll payroll = new Payroll();
+            //loginService.SecureString();
             
         }
     }

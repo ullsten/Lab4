@@ -37,6 +37,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.2" />
     <PackageReference Include="MouseKeyHook" Version="5.6.0" />
+    <PackageReference Include="PanoramicData.ConsoleExtensions" Version="1.0.12" />
     <PackageReference Include="Spectre.Console.Extensions.Table" Version="1.0.0" />
     <PackageReference Include="Spectre.Console.ImageSharp" Version="0.45.0" />
   </ItemGroup>
