@@ -41,7 +41,7 @@ namespace Labb4_Individual_Database_project
                     "- Chickpea stew with rice\n" +
                     "\n" +
                     "\n" +
-                    "All ingredientes are carefully selected adn with local roots");
+                    "All ingredientes are carefully selected and with local roots");
                 courses.Header = new PanelHeader("Food voucher " + date);
                 courses.Expand();
                 courses.BorderColor(Color.Green3);

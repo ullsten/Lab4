@@ -161,7 +161,7 @@ namespace Labb4_Individual_Database_project
             .PageSize(10)
             .MoreChoicesText("[grey](Move up and down to reveal more choices)[/]")
             .AddChoices(new[] {
-            "Payment monthly", "Payment yearly", "Average salary", "Back to admin menu" +
+            "Payment monthly", "Payment yearly", "Average salary", "Salary increase", "Back to admin menu" +
             "",
             "Back to school start", "Go home"
             }));
@@ -175,6 +175,9 @@ namespace Labb4_Individual_Database_project
                     break;
                 case "Average salary":
                     payroll.AverageSalaryDepartment();
+                    break;
+                case "Salary increase":
+                    payroll.SalaryIncrease();
                     break;
                 case "Back to admin menu":
                     AdminMenu();

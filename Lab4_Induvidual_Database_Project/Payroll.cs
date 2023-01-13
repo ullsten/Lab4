@@ -261,8 +261,11 @@ namespace Lab4_Induvidual_Database_Project
                     }
                     else if (negotiate.ToLower()  == "n")
                     {
-                        AnsiConsole.MarkupLine("[grey58]Ok, you can alway come back another time![/]");
-                        Thread.Sleep(1000);
+                        Console.WriteLine();
+                        AnsiConsole.MarkupLine("[darkred_1]Ok, you can always come back another time![/]");
+                        Console.WriteLine();
+                        AnsiConsole.MarkupLine("[grey58]|enter for menu again|[/]");
+                        Console.ReadLine();
                         menu.PayRollOffice();
                     }
                     else
