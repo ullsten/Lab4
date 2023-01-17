@@ -1,6 +1,11 @@
 Oskar Ullsten system developer Edugrade education 22-24
 # Lab4_Induvidual_Database_Project
 Individuellt databasprojekt_Lab4
+
+Login use:
+Admin/admin
+Will edit loginsystem later.
+
 ## Projekt
 
 I detta projekt ska du bygga klart en helt fungerande applikation för den fiktiva skola du jobbat med i de senaste labbarna. Du ska alltså skapa en Consol-applikation som skolan kan använda och som har den funktionalitet som efterfrågas nedan.
